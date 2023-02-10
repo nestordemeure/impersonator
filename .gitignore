@@ -4,6 +4,8 @@
 # project specific
 personas/
 !personas/John Doe/
+personas/John Doe/index.faiss
+personas/John Doe/index.pkl
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

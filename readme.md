@@ -32,6 +32,8 @@ Your subfolder should:
 - include a short description of your persona in a `description.txt` file
 - include texts written by them (if possible non-fiction, correspondence would be best) in a `texts` subfolder (most common formats such as `.txt`, `.docx` and `.pdf` will work fine).
 
+To reload a persona from scratch (taking into account new files), delete the `index.faiss` and `index.pkl` files in its folder.
+
 See the `John Doe` folder for a small example.
 
 ## Inner-Workings
@@ -41,16 +43,25 @@ When a persona is created, its texts are split into chunks that are stored in a 
 When you talk to it, it receives the following prompt (containing the recent history of the chat as well as text chunks that seem relevant to the conversation):
 
 ```
-TODO
+You are {name} and are answering questions.
+You are given the following extracts of texts you have written and the latest messages in the conversation.
+Provide a conversational answer. Stay close to the style and voice of your texts.
+
+EXTRACTS:
+{extracts}
+
+CHAT:
+{chat_history}
+{name}:
 ```
 
 The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes a likely answer from the information it is given, pushing the conversation to the next message.
 
-<sup><sub>*This repository is built on top of [LangChain](https://github.com/hwchase17/langchain).*</sub></sup>
+This repository is built on top of the [LangChain](https://github.com/hwchase17/langchain) library.
 
 ## Potential improvements
 
-* Update `.gitignore` to avoid saving non-example personas
+* add a better example persona
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
-* Add a non-shell UI
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
+* Add a non-shell UI
