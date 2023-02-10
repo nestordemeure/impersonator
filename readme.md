@@ -34,7 +34,7 @@ Your subfolder should:
 
 See the `John Doe` folder for a small example.
 
-## Theory
+## Inner-Workings
 
 When a persona is created, its texts are split into chunks that are stored in a [vector database](https://www.pinecone.io/learn/vector-database/).
 
