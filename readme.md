@@ -36,9 +36,9 @@ See the `John Doe` folder for a small example.
 
 ## Inner-Workings
 
-When a persona is created, its texts are split into chunks that are stored in a [vector database](https://www.pinecone.io/learn/vector-database/).
+When a persona is created, its texts are split into chunks that are stored in a [vector database](https://www.pinecone.io/learn/vector-database/) for easy retrieval.
 
-When you talk to it, it receives the following prompts (containing the recent history of the chat as well as text chunks that seem relevant to the conversation):
+When you talk to it, it receives the following prompt (containing the recent history of the chat as well as text chunks that seem relevant to the conversation):
 
 ```
 TODO
@@ -46,11 +46,11 @@ TODO
 
 The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes a likely answer from the information it is given, pushing the conversation to the next message.
 
-This repository is built on top of [LangChain](https://github.com/hwchase17/langchain).
+<sup><sub>*This repository is built on top of [LangChain](https://github.com/hwchase17/langchain).*</sub></sup>
 
 ## Potential improvements
 
 * Update `.gitignore` to avoid saving non-example personas
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 * Add a non-shell UI
-* suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
+* Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
