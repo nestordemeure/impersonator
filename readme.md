@@ -29,7 +29,6 @@ To add a persona, add a subfolder in the `personas` folder.
 
 Your subfolder should:
 - be named like your persona (i.e. `John Doe`)
-- include a short description of your persona in a `description.txt` file
 - include texts written by them (if possible non-fiction, correspondence would be best) in a `texts` subfolder (most common formats such as `.txt`, `.docx` and `.pdf` will work fine).
 
 To reload a persona from scratch (taking into account new files), delete the `index.faiss` and `index.pkl` files in its folder.
@@ -40,7 +39,7 @@ See the `John Doe` folder for a small example.
 
 When a persona is created, its texts are split into chunks that are stored in a [vector database](https://www.pinecone.io/learn/vector-database/) for easy retrieval.
 
-When you talk to it, it receives the following prompt (containing the recent history of the chat as well as text chunks that seem relevant to the conversation):
+When you talk to a persona, it receives the following prompt (containing the recent history of the chat as well as text chunks that seem relevant to the conversation):
 
 ```
 You are {name} and are answering questions.
@@ -55,9 +54,7 @@ CHAT:
 {name}:
 ```
 
-The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes a likely answer from the information it is given, pushing the conversation to the next message.
-
-This repository is built on top of the [LangChain](https://github.com/hwchase17/langchain) library.
+The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes a likely answer from the information it is given, pushing the conversation to the next message (here the ability of the AI to both hallucinate information and pick up on style is helpful to strengthen the illusion).
 
 ## Potential improvements
 

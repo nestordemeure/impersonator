@@ -28,10 +28,7 @@ class Persona:
         """
         self.name = name 
         self.personas_folder = Path(personas_folder)
-        self.persona_path = self.personas_folder / name
-        # loads the description of the persona
-        with open(self.persona_path / 'description.txt', "r+") as description_file:
-            self.description = description_file.read()        
+        self.persona_path = self.personas_folder / name      
         # loads the vector database
         if self.database_exist():
             self.database = FAISS.load_local(folder_path=self.persona_path, embeddings=EMBEDDING_MODEL)
