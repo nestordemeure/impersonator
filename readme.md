@@ -29,7 +29,7 @@ To add a persona, add a subfolder in the `personas` folder.
 
 Your subfolder should:
 - be named like your persona (i.e. `John Doe`)
-- include texts written by them (if possible non-fiction, correspondence would be best) in a `texts` subfolder (most common formats such as `.txt`, `.docx` and `.pdf` will work fine).
+- include texts written by them (if possible non-fiction, correspondence would be best) in a `texts` subfolder (most common formats such as `.txt`, `.html`, `.docx` and `.pdf` should work fine but it might be easier to convert them to raw text before hand).
 
 To reload a persona from scratch (taking into account new files), delete the `index.faiss` and `index.pkl` files in its folder.
 
