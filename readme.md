@@ -29,7 +29,7 @@ To add a persona, add a subfolder in the `personas` folder.
 
 Your subfolder should:
 - be named like your persona (i.e. `John Doe`)
-- include texts written by them (if possible non-fiction, correspondence would be best) in a `texts` subfolder (most common formats such as `.txt`, `.html`, `.docx` and `.pdf` should work fine but it might be easier to convert them to raw text before hand).
+- include texts written by them (if possible non-fiction, correspondence would be best) in a `texts` subfolder (common formats such as `.txt`, `.html`, `.docx` should work fine, you might have to convert other formats).
 
 To reload a persona from scratch (taking into account new files), delete the `index.faiss` and `index.pkl` files in its folder.
 
@@ -56,9 +56,20 @@ CHAT:
 
 The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes a likely answer from the information it is given, pushing the conversation to the next message (here the ability of the AI to both hallucinate information and pick up on style is helpful to strengthen the illusion).
 
+Do not hesitate to submit pull requests to this repository if you find improvements or good alternative prompts!
+
 ## Potential improvements
 
+* add boolean ui selector
+* try and improve the strict mode
+
+* write a guide to adding a new personna
+* write a guide to the theory? or just keep the main page of the readme updated
+
 * add a better example persona
+  find open example that would be of interest
+  (project gutenberg might be a good source? or a blogger's work)
+
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
 * Add a non-shell UI

@@ -8,7 +8,7 @@ from langchain.vectorstores.faiss import FAISS
 
 DEFAULT_PERSONAS_FOLDER='./personas'
 EMBEDDING_MODEL=OpenAIEmbeddings()
-CHUNK_SIZE=100
+CHUNK_SIZE=1000#100
 
 class Persona:
     """
@@ -57,7 +57,7 @@ class Persona:
         raw_documents = loader.load()
         print(f"   Loaded {len(raw_documents)} documents.")
         # splitting the documents
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=0)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_SIZE//10)
         documents = text_splitter.split_documents(raw_documents)
         print(f"   Built {len(documents)} text chunks.")
         # building the database
