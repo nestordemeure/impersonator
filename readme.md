@@ -23,6 +23,10 @@ If you select a persona that has never been used, it will first generate it from
 
 Once your persona is loaded, you can start chatting with it!
 
+You have a handful of special commands available:
+* `CHECK` will run a fact checker on the persona's latest affirmation,
+* `SOURCE` will display the text extracts used to synthesize the answer.
+
 #### Adding a persona
 
 To add a persona, add a subfolder in the `personas` folder.
@@ -56,19 +60,14 @@ CHAT:
 
 The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes a likely answer from the information it is given, pushing the conversation to the next message (here the ability of the AI to both hallucinate information and pick up on style is helpful to strengthen the illusion).
 
-Do not hesitate to submit pull requests to this repository if you find improvements or good alternative prompts!
 
 ## Potential improvements
 
-* add boolean ui selector
-* try and improve the strict mode (it will still hallucinate a bit)
 * try and load the openAI var from env, if not ask for it in the command line 
   (making it easier fro non programmers)
-* right now a bad source might still produce an answer,
-  try to replace the strict mode by a fact checker llm on top of the normal mode?
 
-* write a guide to adding a new personna
-* write a guide to the theory? or just keep the main page of the readme updated
+* write guide to adding a new personna
+* link to both guides in readme
 
 * add a better example persona
   find open example that would be of interest
@@ -77,3 +76,5 @@ Do not hesitate to submit pull requests to this repository if you find improveme
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
 * Add a non-shell UI
+
+Do not hesitate to submit pull requests to this repository if you find improvements or good alternative prompts!

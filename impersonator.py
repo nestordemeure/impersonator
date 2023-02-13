@@ -46,28 +46,33 @@ persona_name = _pick_option(persona_picking_message, Persona.list())
 persona = Persona(persona_name)
 persona_modes = []
 
-# pick a strictness mode
-strictness_picking_message="Do you want to use Strict Mode?\nIt tries to keep the AI from extrapolating facts from the texts:"
-use_strict_mode = _pick_option(strictness_picking_message, ['yes', 'no']) == 'yes'
-
 #------------------------------------------------------------------------------
 # CHAT
 
 # display persona and modes picked
-mode_string = '(strict)' if use_strict_mode else ''
-print(f"\n ===== Chatting with {persona_name} {mode_string} =====")
+print(f"\n ===== Chatting with {persona_name} =====")
+print("[type CHECK to check the last answer against the texts used to generate it]")
+print("[type SOURCE to display the text extracts used to generate the last answer]")
 
 # initialise the chat
 introductory_message = f"Hi! I am {persona_name}, what can I do for you?"
 chat = Chatbot(persona, user_name=user_name, chat_history=[(Speaker.Ai,introductory_message )], 
-               use_strict_mode=use_strict_mode, verbose=False)
+               verbose=False)
 
 # starts the conversation
 print(f"\n{persona_name}: {introductory_message}\n")
 while True:
     # gets a question from the user
     question = input(f"{user_name}: ")
-
-    # gets a result from the model
-    answer = chat.ask(question)
-    print(f"\n{persona_name}: {answer}\n")
+    if question == 'CHECK':
+        # checks last answer against the sources
+        check = chat.check_last_answer()
+        print(f"\n> {check}\n")
+    elif question in ["SOURCE", "SOURCES"]:
+        # displays the sources
+        sources = chat.get_sources()
+        print(f"\n{sources}\n")
+    else:
+        # gets an answer from the model
+        answer = chat.ask(question)
+        print(f"\n{persona_name}: {answer}\n")
