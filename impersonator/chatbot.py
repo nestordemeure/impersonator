@@ -13,7 +13,7 @@ class Speaker(Enum):
 
 def _context_to_string(documents):
     """
-    turns a list of strings used for context into a string
+    turns a list of strings used as context into a single string
     """
     result = ""
     for doc in documents:
@@ -38,7 +38,7 @@ def _chat_to_string(chat_history, human_name, ai_name, max_messages):
     return result
 
 #----------------------------------------------------------------------------------------
-# Model and prompt
+# Prompts
 
 # prompt to answer the question
 template = """You are {name} and are answering questions.

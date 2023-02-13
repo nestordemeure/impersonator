@@ -66,3 +66,20 @@ Determine whether the assertion is true or false. If it is false, explain why.
 ```
 
 It checks the persona's latest affirmation against the text chunks it was passed.
+
+The repository contains a unused alternative question-answering prompt (under the name `PROMPT_ANSWER_REDUCED_HALUCINATIONS`) that, combined with a lower model temperature, is mostly successful at eliminating hallucinations (it however hurts the flow of the conversation):
+
+```
+You are {name} and are having a sourced conversation.
+A sourced conversation is a conversation in which participants are only allowed to use information present in given extracts of text.
+You are given the following extracts of texts you have written and the latest messages in the conversation.
+Provide a conversational answer. Stay close to the style and voice of your texts.
+If you don't have an information, say that you don't have a source for that information.
+
+EXTRACTS:
+{extracts}
+
+CHAT:
+{chat_history}
+{name}:
+```

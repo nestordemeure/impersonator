@@ -44,7 +44,6 @@ print(f"\n ===== Persona selection =====")
 persona_picking_message="Please pick one of the folowing persona:"
 persona_name = _pick_option(persona_picking_message, Persona.list())
 persona = Persona(persona_name)
-persona_modes = []
 
 #------------------------------------------------------------------------------
 # CHAT
