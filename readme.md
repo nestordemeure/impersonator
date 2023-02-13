@@ -60,13 +60,13 @@ CHAT:
 
 The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes a likely answer from the information it is given, pushing the conversation to the next message (here the ability of the AI to both hallucinate information and pick up on style is helpful to strengthen the illusion).
 
-
 ## Potential improvements
 
 * try and load the openAI var from env, if not ask for it in the command line 
   (making it easier fro non programmers)
 
 * write guide to adding a new personna
+* update the inner-workings guide as well as the readme to note that strict is being used
 * link to both guides in readme
 
 * add a better example persona

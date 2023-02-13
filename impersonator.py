@@ -51,7 +51,7 @@ persona = Persona(persona_name)
 # display persona and modes picked
 print(f"\n ===== Chatting with {persona_name} =====")
 print("[type FREE to let the persona extrapolate information from now on (the default)]")
-print("[type STRICT to switch to a more conservative persona from now on]")
+print("[type STRICT to switch to a somewhat more conservative persona from now on]")
 print("[type CHECK to check the last answer against the texts used to generate it]")
 print("[type SOURCE to display the text extracts used to generate the last answer]")
 
