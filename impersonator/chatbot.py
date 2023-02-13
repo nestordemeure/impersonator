@@ -99,15 +99,17 @@ PROMPT_CHECK = PromptTemplate.from_template(template)
 
 class Chatbot:
     """Represents a chatbot and chat with a given persona"""
-    def __init__(self, persona, user_name, chat_history=[], max_chat_size=10, verbose=False):
+    def __init__(self, persona, user_name, chat_history=[], max_chat_size=10, use_strict=False, verbose=False):
         self.user_name = user_name
         self.persona = persona
         self.chat_history = chat_history
         self.max_chat_size = max_chat_size
+        self.use_strict = use_strict
         self.verbose = verbose
         self.previous_extracts = ""
         # models
         self.answering_chain = LLMChain(llm=OpenAI(temperature=0.7), prompt=PROMPT_ANSWER, verbose=verbose)
+        self.strict_answering_chain = LLMChain(llm=OpenAI(temperature=0), prompt=PROMPT_ANSWER_REDUCED_HALUCINATIONS, verbose=verbose)
         self.embedding_chain = LLMChain(llm=OpenAI(temperature=0), prompt=PROMPT_EMBEDDING, verbose=verbose)
         self.check_chain = LLMChain(llm=OpenAI(temperature=0), prompt=PROMPT_CHECK, verbose=verbose)
 
@@ -126,7 +128,10 @@ class Chatbot:
         extracts = self.persona.similarity_search(embeding_text)
         extracts = _context_to_string(extracts)
         # gets an answer rom the model
-        answer = self.answering_chain({'name':self.persona.name, 'extracts': extracts, 'chat_history': chat_history})['text'].strip()
+        if self.use_strict:
+            answer = self.strict_answering_chain({'name':self.persona.name, 'extracts': extracts, 'chat_history': chat_history})['text'].strip()
+        else:
+            answer = self.answering_chain({'name':self.persona.name, 'extracts': extracts, 'chat_history': chat_history})['text'].strip()
         # save and return
         self.previous_extracts = extracts
         self.chat_history.append((Speaker.Ai, answer))

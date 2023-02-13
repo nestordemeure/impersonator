@@ -50,6 +50,8 @@ persona = Persona(persona_name)
 
 # display persona and modes picked
 print(f"\n ===== Chatting with {persona_name} =====")
+print("[type FREE to let the persona extrapolate information from now on (the default)]")
+print("[type STRICT to switch to a more conservative persona from now on]")
 print("[type CHECK to check the last answer against the texts used to generate it]")
 print("[type SOURCE to display the text extracts used to generate the last answer]")
 
@@ -63,7 +65,15 @@ print(f"\n{persona_name}: {introductory_message}\n")
 while True:
     # gets a question from the user
     question = input(f"{user_name}: ")
-    if question == 'CHECK':
+    if question == 'FREE':
+        # switch to non-strict mode
+        chat.use_strict = False
+        print(f"\n> Activated free mode.\n")
+    elif question == 'STRICT':
+        # switch to strict mode
+        chat.use_strict = True
+        print(f"\n> Activated strict mode.\n")
+    elif question == 'CHECK':
         # checks last answer against the sources
         check = chat.check_last_answer()
         print(f"\n> {check}\n")

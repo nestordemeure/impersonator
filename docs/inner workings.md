@@ -67,7 +67,7 @@ Determine whether the assertion is true or false. If it is false, explain why.
 
 It checks the persona's latest affirmation against the text chunks it was passed.
 
-The repository contains a unused alternative question-answering prompt (under the name `PROMPT_ANSWER_REDUCED_HALUCINATIONS`) that, combined with a lower model temperature, is mostly successful at eliminating hallucinations (it however hurts the flow of the conversation):
+The repository also contains a unused alternative question-answering prompt (under the name `PROMPT_ANSWER_REDUCED_HALUCINATIONS`) that, combined with a lower model temperature, is mostly successful at eliminating hallucinations (it however hurts the flow of the conversation):
 
 ```
 You are {name} and are having a sourced conversation.
