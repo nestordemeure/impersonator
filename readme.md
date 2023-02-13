@@ -61,7 +61,9 @@ Do not hesitate to submit pull requests to this repository if you find improveme
 ## Potential improvements
 
 * add boolean ui selector
-* try and improve the strict mode
+* try and improve the strict mode (it will still hallucinate a bit)
+* try and load the openAI var from env, if not ask for it in the command line 
+  (making it easier fro non programmers)
 
 * write a guide to adding a new personna
 * write a guide to the theory? or just keep the main page of the readme updated
