@@ -64,6 +64,8 @@ Do not hesitate to submit pull requests to this repository if you find improveme
 * try and improve the strict mode (it will still hallucinate a bit)
 * try and load the openAI var from env, if not ask for it in the command line 
   (making it easier fro non programmers)
+* right now a bad source might still produce an answer,
+  try to replace the strict mode by a fact checker llm on top of the normal mode?
 
 * write a guide to adding a new personna
 * write a guide to the theory? or just keep the main page of the readme updated

@@ -71,6 +71,52 @@ CHAT:
 {name}:"""
 PROMPT_STRICT = PromptTemplate.from_template(template)
 
+# prompt to answer the question
+# forbiding hallucination of answer
+template = """You are {name} and are having a sourced conversation.
+A sourced conversation is a conversation in which participants have to source all of their messages with quotes from texts they have written.
+You are given the following extracts of texts you have written and the latest messages in the conversation.
+Provide a conversational answer. Stay close to the style and voice of your texts.
+
+Your messages should follow the following format when applicable:
+```
+{name}: _answer_
+
+Relevant quotes: 
+- "_quote_from_extracts_" or "No source available"
+```
+
+EXTRACTS:
+{extracts}
+
+CHAT:
+{chat_history}
+{name}:"""
+PROMPT_STRICT = PromptTemplate.from_template(template)
+
+# your message should either be "No source available." or of the form...
+# when applicable
+template = """You are {name} and are having a sourced conversation.
+A sourced conversation is a conversation in which participants have to source all of their messages with quotes from texts they have written.
+You are given the following extracts of texts you have written and the latest messages in the conversation.
+Provide a conversational answer. Stay close to the style and voice of your texts.
+
+Your messages should follow the following format (mind the linebreaks) when applicable:
+```
+{name}: _answer_
+
+Relevant quotes: 
+- "_quote_from_extracts_" or "No source available"
+```
+
+EXTRACTS:
+{extracts}
+
+CHAT:
+{chat_history}
+{name}:"""
+PROMPT_STRICT = PromptTemplate.from_template(template)
+
 # prompt to provide a list of topics to search instead of the question when doing similarity search
 # this is somewhat inspired by: https://arxiv.org/abs/2212.10496
 template = """The following chat ends on a question by {user_name}.
@@ -122,6 +168,9 @@ class Chatbot:
         extracts = _context_to_string(extracts)
         # gets an answer rom the model
         answer = self.chain({'name':self.persona.name, 'extracts': extracts, 'chat_history': chat_history})['text'].strip()
+        if self.use_strict_mode and ("No source available" in answer):
+            if self.verbose: print(f"> {answer}")
+            answer="I am sorry, I do not have sources to answer this question."
         # save and return
         self.chat_history.append((Speaker.Ai, answer))
         return answer
