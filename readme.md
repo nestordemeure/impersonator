@@ -62,10 +62,8 @@ The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes
 
 ## Potential improvements
 
-* try and load the openAI var from env, if not ask for it in the command line 
-  (making it easier fro non programmers)
-
 * test importation of pdf and format with images
+
 * write guide to adding a new personna
 * update the inner-workings guide as well as the readme to note that strict is being used
 * link to both guides in readme

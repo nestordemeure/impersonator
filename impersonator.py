@@ -1,7 +1,8 @@
 """
 Command line interface to interact with personas.
 """
-from impersonator import Persona, Chat
+
+import os
 
 #------------------------------------------------------------------------------
 # Utility functions
@@ -38,8 +39,19 @@ print(f" ===== IMPERSONATOR by Nestor Demeure =====")
 # gets the user name for later use
 user_name = input(f"\nPlease type your name: ")
 
+# gets the API key if needed
+api_key = os.getenv('OPENAI_API_KEY')
+if api_key is None:
+    print("\nOpenAI API key not found in the 'OPENAI_API_KEY' environement variable")
+    print("see this link to obtain an API key: https://platform.openai.com/account/api-keys")
+    api_key = input(f"\nPlease type your API key or restart after setting the environement variable: ")
+    os.environ['OPENAI_API_KEY'] = api_key
+
 #------------------------------------------------------------------------------
 # PERSONA SELECTION
+
+# imported *after* the API key is set
+from impersonator import Persona, Chat
 
 print(f"\n ===== Persona selection =====")
 
