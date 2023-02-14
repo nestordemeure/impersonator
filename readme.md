@@ -2,8 +2,6 @@
 
 *Impersonator* lets you chat with an AI simulation of any author, blogger or person as easily as copy-pasting texts they have written into a folder!
 
-See [this page of the documentation](docs/inner%20workings.md) for a detailled explanation of the algorithm.
-
 ## Installation
 
 You will need the following dependencies to run this program:
@@ -27,7 +25,10 @@ You have a handful of special commands available:
 * `CHECK` will run a fact checker on the persona's latest affirmation,
 * `SOURCE` will display the text extracts used to synthesize the answer.
 
-See [this page of the documentation](docs/adding%20a%20persona.md) for a detailled guide to add new personas to the application.
+## Documentation
+
+* [Guide to adding your own personas](docs/adding%20a%20persona.md)
+* [Detailled explanation of the algorithm](docs/inner%20workings.md)
 
 ## Potential improvements
 
