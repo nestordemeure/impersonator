@@ -2,13 +2,13 @@
 import os
 from pathlib import Path
 from langchain.document_loaders import DirectoryLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.faiss import FAISS
+from .prompts_models import EMBEDDING_MODEL, embedding_chain, answering_chain, strict_answering_chain, check_chain
 
 DEFAULT_PERSONAS_FOLDER='./personas'
-EMBEDDING_MODEL=OpenAIEmbeddings()
-CHUNK_SIZE=1000#100
+CHUNK_SIZE=1000
+
 
 class Persona:
     """
@@ -21,21 +21,25 @@ class Persona:
         """
         return [f.name for f in os.scandir(personas_folder) if f.is_dir()]
 
-    def __init__(self, name, personas_folder=DEFAULT_PERSONAS_FOLDER):
+    def __init__(self, name, use_strict=False, personas_folder=DEFAULT_PERSONAS_FOLDER):
         """
         takes the name of a persona and loads it into memory
         generates it if it has not been generated before
         """
+        # persona information
         self.name = name 
         self.personas_folder = Path(personas_folder)
-        self.persona_path = self.personas_folder / name      
-        # loads the vector database
-        if self.database_exist():
+        self.persona_path = self.personas_folder / name
+        self.is_strict = use_strict  
+        # documents database
+        if self._database_exist():
             self.database = FAISS.load_local(folder_path=self.persona_path, embeddings=EMBEDDING_MODEL)
         else:
-            self.database = self.generate_database()
+            self.database = self._generate_database()
     
-    def database_exist(self):
+    # ----- DATABASE -----
+
+    def _database_exist(self):
         """
         returns True if the vector database has already been built
         """
@@ -43,10 +47,9 @@ class Persona:
         index_pkl = self.persona_path / 'index.pkl'
         return index_faiss.is_file() and index_pkl.is_file()
 
-    def generate_database(self):
+    def _generate_database(self):
         """
-        builds the vector database from scratch
-        saves it in a folder
+        builds the vector database from scratch and saves it in a folder
         returns it
         WARNING: this operation can be slow and costly in OpenAI embeddings costs
         """
@@ -68,6 +71,46 @@ class Persona:
         print(f"   Done.")
         return database
 
-    def similarity_search(self, text, k=4):
-        """returns the k closest pieces of text"""
-        return self.database.similarity_search(text, k=k)
+    def get_sources_chat(self, user_name, chat_history, nb_sources=4, separator='========='):
+        """gets text extracts that seem relevant to the question"""
+        # gets a summary of the themes in the question to help with embedding search
+        embeding_text = embedding_chain({'user_name':user_name, 'name':self.name, 'chat_history': chat_history})['text'].strip()
+        # gets documents to help answer the question
+        documents = self.database.similarity_search(embeding_text, k=nb_sources)
+        # converts them into a string
+        sources = ""
+        for doc in documents:
+            sources += doc.page_content
+            sources += f"\n{separator}\n"
+        return sources
+
+    # ----- CHAT -----
+
+    def ask(self, question, sources=None, nb_sources=4):
+        """
+        asks a single question to the persona
+        returns a long answer
+        and the corresponding sources
+        """
+        raise NotImplementedError("The 'ask' function has not been implemented yet.")
+
+    def chat(self, user_name, chat_history, sources=None, nb_sources=4):
+        """
+        pass a user_name, chat_history (string) and optionaly sources to the persona
+        returns a pair (answer, sources)
+        """
+        # gets sources if needed
+        if sources is None:
+            sources = self.get_sources_chat(user_name, chat_history, nb_sources)
+        # gets an answer from the model and returns
+        if self.is_strict:
+            answer = strict_answering_chain({'name':self.name, 'sources': sources, 'chat_history': chat_history})['text'].strip()
+        else:
+            answer = answering_chain({'name':self.name, 'sources': sources, 'chat_history': chat_history})['text'].strip()
+        return (answer, sources)
+    
+    def check_answer(self, answer, sources):
+        """
+        factcheck the chatbot's answer given the corresponding sources
+        """
+        return check_chain({'name':self.name, 'sources': sources, 'answer':answer})['text'].strip()

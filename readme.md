@@ -65,6 +65,7 @@ The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes
 * try and load the openAI var from env, if not ask for it in the command line 
   (making it easier fro non programmers)
 
+* test importation of pdf and format with images
 * write guide to adding a new personna
 * update the inner-workings guide as well as the readme to note that strict is being used
 * link to both guides in readme
@@ -72,9 +73,13 @@ The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes
 * add a better example persona
   find open example that would be of interest
   (project gutenberg might be a good source? or a blogger's work)
+  don giovani?
 
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
+
+* add an option to ask a single question and get a long answer (with REDO)
+* add the possibility of having multiple persona interacting in a single chatb
 * Add a non-shell UI
 
 Do not hesitate to submit pull requests to this repository if you find improvements or good alternative prompts!

@@ -24,6 +24,8 @@ pdf
 
 blog
 non-fiction especialy autobiographies and self-help books (which are often written in the first person)
+yourself (extracting all your messages from social media or using your journals)
+your own fictional character
 
 garbage in, garbage out
 - useless text

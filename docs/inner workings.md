@@ -2,6 +2,8 @@
 
 This repository is an application of [Large Language Models](https://en.wikipedia.org/wiki/Wikipedia:Large_language_models) and, in particular, [GPT-3](https://en.wikipedia.org/wiki/GPT-3).
 
+It relies on [LangChain](https://github.com/hwchase17/langchain) to interface the various language models and functionalities together.
+
 ## 0. Data storage
 
 When a persona is created, its texts are:

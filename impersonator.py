@@ -1,4 +1,7 @@
-from impersonator import Persona, Chatbot, Speaker
+"""
+Command line interface to interact with personas.
+"""
+from impersonator import Persona, Chat
 
 #------------------------------------------------------------------------------
 # Utility functions
@@ -49,39 +52,66 @@ persona = Persona(persona_name)
 # CHAT
 
 # display persona and modes picked
-print(f"\n ===== Chatting with {persona_name} =====")
-print("[type FREE to let the persona extrapolate information from now on (the default)]")
-print("[type STRICT to switch to a somewhat more conservative persona from now on]")
-print("[type CHECK to check the last answer against the texts used to generate it]")
-print("[type SOURCE to display the text extracts used to generate the last answer]")
+print(f"\n ===== Chatting with {persona_name} =====\n")
+print("* type FREE to let the persona extrapolate information from now on (the default)")
+print("* type STRICT to switch to a somewhat more conservative persona from now on")
+print("* type REDO to regenerate the latest answer")
+print("* type CHECK to check the last answer against the texts used to generate it")
+print("* type SOURCE to display the text extracts used to generate the lastest answer")
+print(f"\n ===== Chatting with {persona_name} =====\n")
 
 # initialise the chat
-introductory_message = f"Hi! I am {persona_name}, what can I do for you?"
-chat = Chatbot(persona, user_name=user_name, chat_history=[(Speaker.Ai,introductory_message )], 
-               verbose=False)
+chat = Chat()
+last_sources = None
 
-# starts the conversation
-print(f"\n{persona_name}: {introductory_message}\n")
+# starts conversation
+chat.add_message(persona_name, f"Hi! I am {persona_name}, what can I do for you?", verbose=True)
+print()
+
+# runs conversation
 while True:
-    # gets a question from the user
-    question = input(f"{user_name}: ")
-    if question == 'FREE':
+    # get an input from the user
+    user_message = input(f"{user_name}: ")
+    # process it
+    if user_message == 'FREE':
         # switch to non-strict mode
-        chat.use_strict = False
-        print(f"\n> Activated free mode.\n")
-    elif question == 'STRICT':
+        if persona.is_strict:
+            persona.is_strict = False
+            print(f"\n> Switched to free mode.\n")
+        else:
+            print(f"\n> Already in free mode.\n")
+    elif user_message == 'STRICT':
         # switch to strict mode
-        chat.use_strict = True
-        print(f"\n> Activated strict mode.\n")
-    elif question == 'CHECK':
+        if persona.is_strict:
+            print(f"\n> Already in strict mode.\n")
+        else:
+            persona.is_strict = True
+            print(f"\n> Switched to strict mode.\n")
+    elif user_message == 'CHECK':
         # checks last answer against the sources
-        check = chat.check_last_answer()
+        last_speaker, last_message = chat.history[-1]
+        check = persona.check_answer(last_message, last_sources)
         print(f"\n> {check}\n")
-    elif question in ["SOURCE", "SOURCES"]:
+    elif user_message in ["SOURCE", "SOURCES"]:
         # displays the sources
-        sources = chat.get_sources()
-        print(f"\n{sources}\n")
+        print(f"\n=========\n{last_sources}\n")
+    elif user_message == 'REDO':
+        # forgets last message
+        chat.history.pop()
+        # generates a new message and updates the history with it
+        persona_message, sources = persona.chat(user_name, chat.to_string(), sources=last_sources)
+        chat.history[-1] = (persona_name, persona_message)
+        # displays it
+        print()
+        chat.add_message(persona_name, persona_message, verbose=True)
+        print()
     else:
+        # stores the user's message in the chat
+        chat.add_message(user_name, user_message, verbose=False)
         # gets an answer from the model
-        answer = chat.ask(question)
-        print(f"\n{persona_name}: {answer}\n")
+        persona_message, sources = persona.chat(user_name, chat.to_string())
+        last_sources = sources
+        # displays it
+        print()
+        chat.add_message(persona_name, persona_message, verbose=True)
+        print()
