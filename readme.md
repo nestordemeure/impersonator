@@ -2,6 +2,8 @@
 
 *Impersonator* lets you chat with an AI simulation of any author, blogger or person as easily as copy-pasting texts they have written into a folder!
 
+See [this page of the documentation](docs/inner%20workings.md) for a detailled explanation of the algorithm.
+
 ## Usage
 
 #### Installation
@@ -39,6 +41,8 @@ To reload a persona from scratch (taking into account new files), delete the `in
 
 See the `John Doe` folder for a small example.
 
+See [this page of the documentation](docs/adding%20a%20persona.md) for a detailled guide to add new personas to the application.
+
 ## Inner-Workings
 
 When a persona is created, its texts are split into chunks that are stored in a [vector database](https://www.pinecone.io/learn/vector-database/) for easy retrieval.
@@ -66,7 +70,6 @@ The AI (currently [GPT-3](https://en.wikipedia.org/wiki/GPT-3)) then synthesizes
 
 * write guide to adding a new personna
 * update the inner-workings guide as well as the readme to note that strict is being used
-* link to both guides in readme
 
 * add a better example persona
   find open example that would be of interest
