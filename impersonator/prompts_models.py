@@ -9,10 +9,22 @@ from langchain.llms import OpenAI
 EMBEDDING_MODEL=OpenAIEmbeddings()
 OPENAI_MODEL=OpenAI(temperature=0.7)
 OPENAI_MODEL_STRICT=OpenAI(temperature=0.7)
+OPENAI_MODEL_LONG=OpenAI(temperature=0.7, max_tokens=1000)
 
 #----------------------------------------------------------------------------------------
 # PROMPTS
 
+# prompt to provide a list of topics to search instead of the question when doing similarity search
+# this is somewhat inspired by: https://arxiv.org/abs/2212.10496
+template = """The following chat ends on a question by {user_name}.
+Write a list of queries to google the answer to {user_name}'s last question.
+Use precise words, don't be afraid of using synonyms.
+
+CHAT:
+{chat_history}
+
+GOOGLE: {name}"""
+PROMPT_EMBEDDING = PromptTemplate.from_template(template)
 
 # prompt to answer the question
 template = """You are {name} and are answering questions.
@@ -43,17 +55,18 @@ CHAT:
 {name}:"""
 PROMPT_ANSWER_REDUCED_HALUCINATIONS = PromptTemplate.from_template(template)
 
-# prompt to provide a list of topics to search instead of the question when doing similarity search
-# this is somewhat inspired by: https://arxiv.org/abs/2212.10496
-template = """The following chat ends on a question by {user_name}.
-Write a list of queries to google the answer to {user_name}'s last question.
-Use precise words, don't be afraid of using synonyms.
+# long form writing
+template = """You are {name} and are writing a text according to the given specification.
+You are given the following extracts of texts you have written, stay close to the style and voice of your texts.
 
-CHAT:
-{chat_history}
+EXTRACTS:
+{sources}
 
-GOOGLE: {name}"""
-PROMPT_EMBEDDING = PromptTemplate.from_template(template)
+SPECIFICATION:
+{specification}
+
+TEXT:"""
+PROMPT_WRITE = PromptTemplate.from_template(template)
 
 # prompt to fact check the bot's last answer
 template = """The following texts have been written by {name}.
@@ -75,3 +88,4 @@ answering_chain = LLMChain(llm=OPENAI_MODEL, prompt=PROMPT_ANSWER)
 strict_answering_chain = LLMChain(llm=OPENAI_MODEL_STRICT, prompt=PROMPT_ANSWER_REDUCED_HALUCINATIONS)
 embedding_chain = LLMChain(llm=OPENAI_MODEL_STRICT, prompt=PROMPT_EMBEDDING)
 check_chain = LLMChain(llm=OPENAI_MODEL_STRICT, prompt=PROMPT_CHECK)
+writing_chain = LLMChain(llm=OPENAI_MODEL_LONG, prompt=PROMPT_WRITE)

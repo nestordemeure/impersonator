@@ -8,6 +8,7 @@ You will need the following dependencies to run this program:
 - `unstructured` (data loading)
 - `openai` (models)
 - `tiktoken` (tokens counting)
+- `bs4` ()
 - `langchain` (plumbing)
 
 I recommend creating a [conda](https://docs.conda.io/en/latest/) environment to install all of them.
@@ -45,7 +46,6 @@ You have a handful of special commands available:
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
 
-* add an option to ask a single question and get a long answer (with REDO)
 * add the possibility of having multiple persona interacting in a single chatb
 * Add a non-shell UI
 

@@ -70,6 +70,7 @@ print("* type STRICT to switch to a somewhat more conservative persona from now 
 print("* type REDO to regenerate the latest answer")
 print("* type CHECK to check the last answer against the texts used to generate it")
 print("* type SOURCE to display the text extracts used to generate the lastest answer")
+print("* type WRITE followed by a precise description of the text you want written to get a long form answer")
 print(f"\n ===== Chatting with {persona_name} =====\n")
 
 # initialise the chat
@@ -113,6 +114,18 @@ while True:
         # generates a new message and updates the history with it
         persona_message, sources = persona.chat(user_name, chat.to_string(), sources=last_sources)
         chat.history[-1] = (persona_name, persona_message)
+        # displays it
+        print()
+        chat.add_message(persona_name, persona_message, verbose=True)
+        print()
+    elif user_message.startswith('WRITE'):
+        # remove the commad from the message
+        user_message = 'Write' + user_message[5:]
+        # stores the user's message in the chat
+        chat.add_message(user_name, user_message, verbose=False)
+        # gets an answer from the model
+        persona_message, sources = persona.write(user_name, user_message, verbose=False)
+        last_sources = sources
         # displays it
         print()
         chat.add_message(persona_name, persona_message, verbose=True)

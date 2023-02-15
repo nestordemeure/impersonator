@@ -4,7 +4,7 @@ from pathlib import Path
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.faiss import FAISS
-from .prompts_models import EMBEDDING_MODEL, embedding_chain, answering_chain, strict_answering_chain, check_chain
+from .prompts_models import EMBEDDING_MODEL, embedding_chain, answering_chain, strict_answering_chain, check_chain, writing_chain
 
 DEFAULT_PERSONAS_FOLDER='./personas'
 CHUNK_SIZE=1000
@@ -71,10 +71,11 @@ class Persona:
         print(f"   Done.")
         return database
 
-    def get_sources_chat(self, user_name, chat_history, nb_sources=4, separator='========='):
+    def get_sources(self, user_name, chat_history, nb_sources=4, separator='=========', verbose=False):
         """gets text extracts that seem relevant to the question"""
         # gets a summary of the themes in the question to help with embedding search
         embeding_text = embedding_chain({'user_name':user_name, 'name':self.name, 'chat_history': chat_history})['text'].strip()
+        if verbose: print(f"> Embeding text: {embeding_text}")
         # gets documents to help answer the question
         documents = self.database.similarity_search(embeding_text, k=nb_sources)
         # converts them into a string
@@ -86,29 +87,34 @@ class Persona:
 
     # ----- CHAT -----
 
-    def ask(self, question, sources=None, nb_sources=4):
-        """
-        asks a single question to the persona
-        returns a long answer
-        and the corresponding sources
-        """
-        raise NotImplementedError("The 'ask' function has not been implemented yet.")
-
-    def chat(self, user_name, chat_history, sources=None, nb_sources=4):
+    def chat(self, user_name, chat_history, sources=None, nb_sources=4, verbose=False):
         """
         pass a user_name, chat_history (string) and optionaly sources to the persona
         returns a pair (answer, sources)
         """
         # gets sources if needed
         if sources is None:
-            sources = self.get_sources_chat(user_name, chat_history, nb_sources)
+            sources = self.get_sources(user_name, chat_history, nb_sources, verbose=verbose)
         # gets an answer from the model and returns
         if self.is_strict:
             answer = strict_answering_chain({'name':self.name, 'sources': sources, 'chat_history': chat_history})['text'].strip()
         else:
             answer = answering_chain({'name':self.name, 'sources': sources, 'chat_history': chat_history})['text'].strip()
         return (answer, sources)
-    
+
+    def write(self, user_name, question, sources=None, nb_sources=4, verbose=False):
+        """
+        get the persona to write a text on a given subject
+        returns a long answer
+        and the corresponding sources
+        """
+        # gets sources if needed
+        if sources is None:
+            sources = self.get_sources(user_name, question, nb_sources, verbose=verbose)
+        # gets an answer from the model and returns
+        answer = writing_chain({'name':self.name, 'sources': sources, 'specification': question})['text'].strip()
+        return (answer, sources)
+
     def check_answer(self, answer, sources):
         """
         factcheck the chatbot's answer given the corresponding sources
