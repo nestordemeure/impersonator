@@ -8,8 +8,8 @@ personas/
 !personas/Marcus Aurelius/
 !personas/Mark Twain/
 !personas/Queen Victoria/
-#personas/*/index.faiss
-#personas/*/index.pkl
+personas/*/index.faiss
+personas/*/index.pkl
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

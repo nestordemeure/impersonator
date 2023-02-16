@@ -53,11 +53,6 @@ You have a handful of special commands available:
 
 * update readme with latest commands
 
-* add a better example persona
-  find open example that would be of interest
-  (project gutenberg might be a good source? or a blogger's work)
-  don giovani?
-
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
