@@ -65,7 +65,7 @@ find . -name '*.epub' -exec pandoc -f epub -t html -o {}.html {} \;
 
 ## What files to use
 
-#### File types
+#### Type of text one could use
 
 To create a persona, you need texts written in the first person by a given author.
 Good examples include:
@@ -78,7 +78,9 @@ Good examples include:
 * your own diaries or journals
 * a short, first-person, description/autobiography of one of your fictional characters
 
-[Project Gutenberg](https://www.gutenberg.org/) is a great place to find copyright-free texts (you can even download them in `.txt` format).
+Adding a short pseudo-autobiography can be helpful in filling holes in the narrative.
+
+[Project Gutenberg](https://www.gutenberg.org/) is a great place to find copyright-free texts (you can even often download them in `.txt` format).
 
 #### Garbage-in, garbage-out
 
