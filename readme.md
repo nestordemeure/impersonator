@@ -46,6 +46,8 @@ You have a handful of special commands available:
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
 
+* have the persona automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed).
+
 * add the possibility of having multiple persona interacting in a single chatb
 * Add a non-shell UI
 
