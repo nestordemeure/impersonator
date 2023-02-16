@@ -14,7 +14,7 @@ Delete those files if you want to regenerate the persona to take new files into 
 
 Any other file out of the `texts` folder will be ignored, fill free to add notes on the sources of the files, the personality of the persona, etc.
 
-See the `John Doe` folder for a small example.
+See the `persona` folder for various examples.
 
 ## File conversion
 
