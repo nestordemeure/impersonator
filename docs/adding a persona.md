@@ -14,6 +14,8 @@ Delete those files if you want to regenerate the persona to take new files into 
 
 Any other file out of the `texts` folder will be ignored, fill free to add notes on the sources of the files, the personality of the persona, etc.
 
+You can place an `about` folder in `texts` to mark texts as being written by someone other than the persona.
+
 See the `persona` folder for various examples.
 
 ## File conversion

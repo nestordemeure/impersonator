@@ -54,11 +54,15 @@ class Persona:
         WARNING: this operation can be slow and costly in OpenAI embeddings costs
         """
         print(f"Generating the vector database for '{self.name}'.")
-        documents_path = self.persona_path / 'texts'
         # loading the documents
+        documents_path = self.persona_path / 'texts'
         loader = DirectoryLoader(documents_path)
         raw_documents = loader.load()
         print(f"   Loaded {len(raw_documents)} documents.")
+        # labeling documents as being written by the persona or not
+        for document in raw_documents:
+            in_about_folder = 'texts/about/' in document.metadata['source']
+            document.metadata['written_by_persona'] = not in_about_folder
         # splitting the documents
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_SIZE//10)
         documents = text_splitter.split_documents(raw_documents)
