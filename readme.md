@@ -51,6 +51,7 @@ To use them, type one of those commands in the chat instead of your message:
 ## Potential improvements
 
 * use the chatGPT API to reduce costs and simplify the code
+* differentiate between text written by the person and text written about the person
 
 * have the persona be automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed)
 * add the possibility of having multiple personas interacting in a single chat
