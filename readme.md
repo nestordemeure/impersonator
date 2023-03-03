@@ -11,6 +11,10 @@ You will need the following dependencies to run this program:
 - `bs4` (webpages scraping)
 - `langchain` (plumbing)
 
+`faiss-cpu`
+
+`nltk` might require some image recognition models to be installed
+
 I recommend instaling [conda](https://docs.conda.io/en/latest/) and [creating an environment](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) as follows to download them:
 
 ```
@@ -55,10 +59,13 @@ You have a handful of special commands available:
 
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 
+* add proper way to exit
+
 * Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
 
 * have the persona automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed).
 * add the possibility of having multiple persona interacting in a single chatb
+* add a persona-hub (github repository plus easy way to contribute) and the possibility to download from the hub (could also be decentralised: any github repository with the right file structure)
 * Add a non-shell UI
 
 Do not hesitate to submit pull requests to this repository if you find improvements or good alternative prompts!

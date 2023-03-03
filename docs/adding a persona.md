@@ -72,15 +72,15 @@ Good examples include:
 
 * correspondence
 * autobiographies
-* blog posts (there are various tools to do so)
+* blog posts (there are various tools to do so, a simple [wget -r website.com](https://askubuntu.com/a/20469/713860) does the trick)
 * some non-fiction and, in particular, self-help books (which are often written in the first person)
 * your own chat messages (most chatting platform support downloading your chat history)
 * your own diaries or journals
 * a short, first-person, description/autobiography of one of your fictional characters
-
+find copyright-free 
 Adding a short pseudo-autobiography can be helpful in filling holes in the narrative.
 
-[Project Gutenberg](https://www.gutenberg.org/) is a great place to find copyright-free texts (you can even often download them in `.txt` format).
+[Project Gutenberg](https://www.gutenberg.org/) and [archive.org](https://archive.org/) are great places to texts (you can even often download them in `.txt` format).
 
 #### Garbage-in, garbage-out
 
