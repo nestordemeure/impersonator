@@ -4,24 +4,20 @@
 
 ## Installation
 
-You will need the following dependencies to run this program:
-- `unstructured` (data loading)
-- `openai` (models)
-- `tiktoken` (tokens counting)
-- `bs4` (webpages scraping)
-- `langchain` (plumbing)
+You can run the following pip command to instal the dependencies (I recommend using a [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) or [venv](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-and-using-virtual-environments) environement to isolate the dependencies):
 
-`faiss-cpu`
-
-`nltk` might require some image recognition models to be installed
-
-I recommend instaling [conda](https://docs.conda.io/en/latest/) and [creating an environment](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) as follows to download them:
-
-```
-conda env create -f environment.yml
+```shell
+python3 -m pip install unstructured openai tiktoken bs4 faiss-cpu langchain
 ```
 
-Version numbers have been frozen but this program will likely run with newer versions.
+The `nltk` package (a subdependency) might require some image recognition models to be loaded in order to process pdf inputs.
+You can install them with the following command line:
+
+```shell
+python3 
+```
+
+You can now git clone this repository wherever you want and start to use it!
 
 ## Usage
 
@@ -57,7 +53,7 @@ You have a handful of special commands available:
 
 * update readme with latest commands
 
-* Set things up to make it easy to install with pip or similar (if possible include dependencies)
+* use the chatGPT API to reduce costs and simplify the code
 
 * have the persona automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed).
 * add the possibility of having multiple persona interacting in a single chatb
