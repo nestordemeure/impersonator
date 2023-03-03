@@ -70,7 +70,7 @@ print("* type STRICT to switch to a somewhat more conservative persona from now 
 print("* type REDO to regenerate the latest answer")
 print("* type CHECK to check the last answer against the texts used to generate it")
 print("* type SOURCE to display the text extracts used to generate the lastest answer")
-print("* type WRITE followed by a precise description of the text you want written to get a long form answer")
+#print("* type WRITE followed by a precise description of the text you want written to get a long form answer")
 print(f"\n ===== Chatting with {persona_name} =====\n")
 
 # initialise the chat
