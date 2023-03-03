@@ -16,7 +16,7 @@ The `nltk` package (a subdependency) will require the following models:
 python3 -m nltk.downloader punkt averaged_perceptron_tagger
 ```
 
-Finally, you will need to [install Detectron2](https://detectron2.readthedocs.io/en/latest/tutorials/install.html) if you want to process inputs with pictures. You can skip this step by avoiding any pictures in your input files.
+Finally, you will need to [install Detectron2](https://detectron2.readthedocs.io/en/latest/tutorials/install.html) if you want to process inputs with pictures. This can be tricky but, you can skip this step by avoiding any pictures in your input files.
 
 You can now git clone this repository wherever you want and start to use it!
 
