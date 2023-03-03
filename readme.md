@@ -59,10 +59,6 @@ You have a handful of special commands available:
 
 * Set things up to make it easy to install with pip or similar (if possible include dependencies)
 
-* add proper way to exit
-
-* Suggest for inclusion in [LangChainHub](https://github.com/hwchase17/langchain-hub)
-
 * have the persona automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed).
 * add the possibility of having multiple persona interacting in a single chatb
 * add a persona-hub (github repository plus easy way to contribute) and the possibility to download from the hub (could also be decentralised: any github repository with the right file structure)
