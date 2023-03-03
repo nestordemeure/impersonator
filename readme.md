@@ -23,26 +23,24 @@ You can now git clone this repository wherever you want and start to use it!
 
 #### Starting Impersonator
 
-Afterward, you can [activate the environment](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#activating-an-environment) whenever you want to use impersonator:
-
-```
-conda activate impersonator
-```
-
-#### Loading a persona
-
 To start the program, put your [OpenAI API key](https://platform.openai.com/account/api-keys) in the environment then start `impersonator.py`.
 
 It will display a list of personas available (see [this page](docs/adding%20a%20persona.md) for ways to add personas).
-If you select a persona that has never been used, it will first generate it from the data (which will take time proportional to the amount of data in the `texts` subfolder of your persona).
+If you select a persona that has never been used, it will first generate it from the data (which will take time proportional to the amount of data in the `texts` subfolder of your persona, probably less than five minutes).
 
 Once your persona is loaded, you can start chatting with it!
 
 #### Commands
 
-You have a handful of special commands available:
+You have a handful of special commands available.
+To use them, type one of those command in the chat:
+
+* `FREE` lets the persona extrapolate information, filling holes in its knowledge, from now on (the default)
+* `STRICT` avoids extrapolation from now on
 * `CHECK` will run a fact checker on the persona's latest affirmation,
-* `SOURCE` will display the text extracts used to synthesize the answer.
+* `SOURCE` will display the text extracts used to synthesize the answer,
+* `REDO` will regenerate the latest answer,
+* `EXIT` will terminate the chat.
 
 ## Documentation
 
@@ -51,13 +49,10 @@ You have a handful of special commands available:
 
 ## Potential improvements
 
-* update readme with latest commands
-
 * use the chatGPT API to reduce costs and simplify the code
-
-* have the persona automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed).
-* add the possibility of having multiple persona interacting in a single chatb
-* add a persona-hub (github repository plus easy way to contribute) and the possibility to download from the hub (could also be decentralised: any github repository with the right file structure)
+* have the persona be automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed)
+* add the possibility of having multiple personas interacting in a single chat
+* add a persona-hub and the possibility to download from the hub
 * Add a non-shell UI
 
 Do not hesitate to submit pull requests to this repository if you find improvements or good alternative prompts!
