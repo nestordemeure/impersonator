@@ -7,21 +7,23 @@
 You can run the following pip command to install the dependencies (I recommend using a [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) or [venv](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-and-using-virtual-environments) environment to isolate the dependencies):
 
 ```shell
-python3 -m pip install unstructured openai tiktoken bs4 faiss-cpu langchain
+python3 -m pip install unstructured[local-inference] openai tiktoken bs4 faiss-cpu langchain
 ```
 
-The `nltk` package (a subdependency) might require some image recognition models to be loaded in order to process pdf inputs.
-You can install them with the following command line:
+The `nltk` package (a subdependency) will require the following models:
 
 ```shell
-python3 
+python3 -m nltk.downloader punkt averaged_perceptron_tagger
 ```
+
+Finally, you will need to install [Detectron2](https://detectron2.readthedocs.io/en/latest/tutorials/install.html) if you want to process inputs with pictures (it will be used to break the pictures down into text descriptions).
+You can skip this step by avoiding any pictures in your input files.
 
 You can now git clone this repository wherever you want and start to use it!
 
 ## Usage
 
-#### Starting Impersonator
+#### Starting
 
 To start the program, put your [OpenAI API key](https://platform.openai.com/account/api-keys) in the environment (you can also type it at the beginning of the program) then start `impersonator.py`.
 
@@ -30,7 +32,7 @@ If you select a persona that has never been used, it will first generate it from
 
 Once your persona is loaded, you can start chatting with it!
 
-#### Commands
+#### Special commands
 
 You have a handful of special commands available.
 To use them, type one of those commands in the chat instead of your message:
@@ -50,6 +52,7 @@ To use them, type one of those commands in the chat instead of your message:
 ## Potential improvements
 
 * use the chatGPT API to reduce costs and simplify the code
+
 * have the persona be automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed)
 * add the possibility of having multiple personas interacting in a single chat
 * add a persona-hub and the possibility to download from the hub
