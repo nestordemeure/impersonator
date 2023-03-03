@@ -4,7 +4,7 @@
 
 ## Installation
 
-You can run the following pip command to instal the dependencies (I recommend using a [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) or [venv](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-and-using-virtual-environments) environement to isolate the dependencies):
+You can run the following pip command to install the dependencies (I recommend using a [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) or [venv](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-and-using-virtual-environments) environment to isolate the dependencies):
 
 ```shell
 python3 -m pip install unstructured openai tiktoken bs4 faiss-cpu langchain
@@ -23,7 +23,7 @@ You can now git clone this repository wherever you want and start to use it!
 
 #### Starting Impersonator
 
-To start the program, put your [OpenAI API key](https://platform.openai.com/account/api-keys) in the environment then start `impersonator.py`.
+To start the program, put your [OpenAI API key](https://platform.openai.com/account/api-keys) in the environment (you can also type it at the beginning of the program) then start `impersonator.py`.
 
 It will display a list of personas available (see [this page](docs/adding%20a%20persona.md) for ways to add personas).
 If you select a persona that has never been used, it will first generate it from the data (which will take time proportional to the amount of data in the `texts` subfolder of your persona, probably less than five minutes).
@@ -33,7 +33,7 @@ Once your persona is loaded, you can start chatting with it!
 #### Commands
 
 You have a handful of special commands available.
-To use them, type one of those command in the chat:
+To use them, type one of those commands in the chat instead of your message:
 
 * `FREE` lets the persona extrapolate information, filling holes in its knowledge, from now on (the default)
 * `STRICT` avoids extrapolation from now on
@@ -42,10 +42,10 @@ To use them, type one of those command in the chat:
 * `REDO` will regenerate the latest answer,
 * `EXIT` will terminate the chat.
 
-## Documentation
+#### Documentation
 
 * [Guide to adding your own personas](docs/adding%20a%20persona.md)
-* [Detailled explanation of the algorithm](docs/inner%20workings.md)
+* [Detailed explanation of the algorithm](docs/inner%20workings.md)
 
 ## Potential improvements
 
