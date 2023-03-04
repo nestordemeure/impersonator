@@ -28,10 +28,9 @@ PROMPT_EMBEDDING = PromptTemplate.from_template(template)
 
 # prompt to answer the question
 template = """You are {name} and are answering questions.
-You are given the following extracts of texts you have written and the latest messages in the conversation.
+You are given the following extracts of texts that have been written by you or about you and the latest messages in the conversation.
 Provide a conversational answer. Stay close to the style and voice of your texts.
 
-EXTRACTS:
 {sources}
 
 CHAT:
@@ -43,11 +42,10 @@ PROMPT_ANSWER = PromptTemplate.from_template(template)
 # this variant is mostly succesful at forbidding halucinations
 template = """You are {name} and are having a sourced conversation.
 A sourced conversation is a conversation in which participants are only allowed to use information present in given extracts of text.
-You are given the following extracts of texts you have written and the latest messages in the conversation.
+You are given the following extracts of texts that have been written by you or about you and the latest messages in the conversation.
 Provide a conversational answer. Stay close to the style and voice of your texts.
 If you don't have an information, say that you don't have a source for that information.
 
-EXTRACTS:
 {sources}
 
 CHAT:
@@ -55,23 +53,9 @@ CHAT:
 {name}:"""
 PROMPT_ANSWER_REDUCED_HALUCINATIONS = PromptTemplate.from_template(template)
 
-# long form writing
-template = """You are {name} and are writing a text according to the given specification.
-You are given the following extracts of texts you have written, stay close to the style and voice of your texts.
-
-EXTRACTS:
-{sources}
-
-SPECIFICATION:
-{specification}
-
-TEXT:"""
-PROMPT_WRITE = PromptTemplate.from_template(template)
-
 # prompt to fact check the bot's last answer
-template = """The following texts have been written by {name}.
+template = """The following source texts have been written by or about {name}.
 
-SOURCES:
 {sources}
 
 ASSERTION:
@@ -88,4 +72,3 @@ answering_chain = LLMChain(llm=OPENAI_MODEL, prompt=PROMPT_ANSWER)
 strict_answering_chain = LLMChain(llm=OPENAI_MODEL_STRICT, prompt=PROMPT_ANSWER_REDUCED_HALUCINATIONS)
 embedding_chain = LLMChain(llm=OPENAI_MODEL_STRICT, prompt=PROMPT_EMBEDDING)
 check_chain = LLMChain(llm=OPENAI_MODEL_STRICT, prompt=PROMPT_CHECK)
-writing_chain = LLMChain(llm=OPENAI_MODEL_LONG, prompt=PROMPT_WRITE)

@@ -4,7 +4,7 @@ from pathlib import Path
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.faiss import FAISS
-from .prompts_models import EMBEDDING_MODEL, embedding_chain, answering_chain, strict_answering_chain, check_chain, writing_chain
+from .prompts_models import EMBEDDING_MODEL, embedding_chain, answering_chain, strict_answering_chain, check_chain
 
 DEFAULT_PERSONAS_FOLDER='./personas'
 CHUNK_SIZE=1000
@@ -55,14 +55,18 @@ class Persona:
         """
         print(f"Generating the vector database for '{self.name}'.")
         # loading the documents
-        documents_path = self.persona_path / 'texts'
-        loader = DirectoryLoader(documents_path)
-        raw_documents = loader.load()
-        print(f"   Loaded {len(raw_documents)} documents.")
-        # labeling documents as being written by the persona or not
-        for document in raw_documents:
-            in_about_folder = 'texts/about/' in document.metadata['source']
-            document.metadata['written_by_persona'] = not in_about_folder
+        raw_documents = []
+        nb_documents = []
+        for folder_name in ['texts_by', 'texts_about']:
+            documents_path = self.persona_path / folder_name
+            loader = DirectoryLoader(documents_path)
+            raw_documents_folder = loader.load()
+            nb_documents.append(len(raw_documents_folder))
+            # label documents as being written by the persona
+            for document in raw_documents_folder:
+                document.metadata['written_by_persona'] = (folder_name == 'texts_by')
+            raw_documents.extend(raw_documents_folder)
+        print(f"   Loaded {len(raw_documents)} documents ({nb_documents[0]} by, {nb_documents[1]} about).")
         # splitting the documents
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_SIZE//10)
         documents = text_splitter.split_documents(raw_documents)
@@ -82,11 +86,24 @@ class Persona:
         if verbose: print(f"> Embeding text: {embeding_text}")
         # gets documents to help answer the question
         documents = self.database.similarity_search(embeding_text, k=nb_sources)
-        # converts them into a string
-        sources = ""
+        # converts them into strings
+        sources_by = ""
+        sources_about = ""
         for doc in documents:
-            sources += doc.page_content
-            sources += f"\n{separator}\n"
+            if doc.metadata['written_by_persona']:
+                sources_by += doc.page_content
+                sources_by += f"\n{separator}\n"
+            else:
+                sources_about += doc.page_content
+                sources_about += f"\n{separator}\n"
+        # merge the strings
+        sources = ""
+        if sources_by != "":
+            sources += f"WRITTEN BY {self.name.upper()}:\n{sources_by}"
+        if sources_about != "":
+            if sources != "": sources += '\n'
+            sources += f"WRITTEN ABOUT {self.name.upper()}:\n{sources_about}"
+        if verbose: print(sources)
         return sources
 
     # ----- CHAT -----
@@ -104,19 +121,6 @@ class Persona:
             answer = strict_answering_chain({'name':self.name, 'sources': sources, 'chat_history': chat_history})['text'].strip()
         else:
             answer = answering_chain({'name':self.name, 'sources': sources, 'chat_history': chat_history})['text'].strip()
-        return (answer, sources)
-
-    def write(self, user_name, question, sources=None, nb_sources=4, verbose=False):
-        """
-        get the persona to write a text on a given subject
-        returns a long answer
-        and the corresponding sources
-        """
-        # gets sources if needed
-        if sources is None:
-            sources = self.get_sources(user_name, question, nb_sources, verbose=verbose)
-        # gets an answer from the model and returns
-        answer = writing_chain({'name':self.name, 'sources': sources, 'specification': question})['text'].strip()
         return (answer, sources)
 
     def check_answer(self, answer, sources):

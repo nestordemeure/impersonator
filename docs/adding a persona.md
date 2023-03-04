@@ -7,16 +7,18 @@ To add a persona, add a subfolder in the `personas` folder.
 Your subfolder should:
 
 * be named like your persona (i.e. `John Doe`)
-* include texts written by them (if possible in the first person) in a `texts` subfolder
+* include texts written by them (if possible in the first person) in a `texts_by` subfolder
+* include texts written about them[^aboutby] in a `texts_about` subfolder (this is good for things like introductions by other authors)
 
 The generation of the persona will generate `index.faiss` and `index.pkl` files containing the extracted information.
 Delete those files if you want to regenerate the persona to take new files into account.
 
-Any other file out of the `texts` folder will be ignored, fill free to add notes on the sources of the files, the personality of the persona, etc.
-
-You can place an `about` folder in `texts` to mark texts as being written by someone other than the persona.
+Any other file out of the `texts_by`/`texts_about` folders will be ignored, fill free to add notes on the sources of the files, the personality of the persona, etc.
 
 See the `persona` folder for various examples.
+
+[^aboutby]: Some texts (such as texts written in multiple voices) might not fit perfectly in either `texts_by` or `texts_about`.
+It is okay. Slice them if you can then put them in the folder that seems most appropriate.
 
 ## File conversion
 
@@ -82,7 +84,7 @@ Good examples include:
 find copyright-free 
 Adding a short pseudo-autobiography can be helpful in filling holes in the narrative.
 
-[Project Gutenberg](https://www.gutenberg.org/) and [archive.org](https://archive.org/) are great places to texts (you can even often download them in `.txt` format).
+[Project Gutenberg](https://www.gutenberg.org/) and [archive.org](https://archive.org/) are great places to find texts (you can even often download them in `.txt` format).
 
 #### Garbage-in, garbage-out
 
@@ -92,4 +94,3 @@ I recommend cutting the following when possible:
 
 * useless text (table of content, advertisement, html footers, etc)
 * irrelevant text
-* text written by people other than the person (it might be worth rewriting in the first-person if it is information-rich)

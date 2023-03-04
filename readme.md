@@ -27,7 +27,7 @@ You can now git clone this repository wherever you want and start to use it!
 To start the program, put your [OpenAI API key](https://platform.openai.com/account/api-keys) in the environment (you can also type it at the beginning of the program) then start `impersonator.py`.
 
 It will display a list of personas available (see [this page](docs/adding%20a%20persona.md) for ways to add personas).
-If you select a persona that has never been used, it will first generate it from the data (which will take time proportional to the amount of data in the `texts` subfolder of your persona, probably less than five minutes).
+If you select a persona that has never been used, it will first generate it from the data (which will take time proportional to the amount of data in the `texts_by`/`texts_about` subfolders of your persona, probably less than five minutes).
 
 Once your persona is loaded, you can start chatting with it!
 
@@ -51,7 +51,6 @@ To use them, type one of those commands in the chat instead of your message:
 ## Potential improvements
 
 * use the chatGPT API to reduce costs and simplify the code
-* differentiate between text written by the person and text written about the person
 
 * have the persona be automatically regenerated if one touches the files in its folder (at best it should be updated rather than recomputed)
 * add the possibility of having multiple personas interacting in a single chat

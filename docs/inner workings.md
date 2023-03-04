@@ -33,15 +33,14 @@ The key idea (somewhat inspired by [Hypothetical Document Embeddings](https://ar
 
 #### Free mode
 
-Once the text chunks have been generated, the following prompt (containing the recent history of the chat as well as the chunks) is generated and send to a language model:
+Once the text chunks have been generated, the following prompt (containing the recent history of the chat as well as the chunks split depending on whether they have been written by or about the persona) is generated and sent to a language model:
 
 ```
 You are {name} and are answering questions.
-You are given the following extracts of texts you have written and the latest messages in the conversation.
+You are given the following extracts of texts that have been written by you or about you and the latest messages in the conversation.
 Provide a conversational answer. Stay close to the style and voice of your texts.
 
-EXTRACTS:
-{extracts}
+{sources}
 
 CHAT:
 {chat_history}
@@ -57,12 +56,11 @@ Strict mode uses this alternative prompt:
 ```
 You are {name} and are having a sourced conversation.
 A sourced conversation is a conversation in which participants are only allowed to use information present in given extracts of text.
-You are given the following extracts of texts you have written and the latest messages in the conversation.
+You are given the following extracts of texts that have been written by you or about you and the latest messages in the conversation.
 Provide a conversational answer. Stay close to the style and voice of your texts.
 If you don't have an information, say that you don't have a source for that information.
 
-EXTRACTS:
-{extracts}
+{sources}
 
 CHAT:
 {chat_history}
@@ -71,21 +69,20 @@ CHAT:
 
 Combined with a lower model temperature, it is mostly successful at eliminating hallucinations (it however hurts the flow of the conversation).
 
-## Bonus. Fact checking
+## Bonus. Fact-checking
 
 Fact-checking passes this prompt (inspired by [fact-checker](https://github.com/jagilley/fact-checker)) to the language model:
 
 ```
-The following texts have been written by {name}.
+The following source texts have been written by or about {name}.
 
-SOURCES:
-{extracts}
+{sources}
 
 ASSERTION:
 {name}: {answer}
 
 The sources are all true.
-Determine whether the assertion is true or false. If it is false, explain why.
+Determine whether the assertion is true or false. If it is false, explain why."""
 ```
 
 The prompt gets the language model to check the persona's latest affirmation against the text chunks it was passed.
